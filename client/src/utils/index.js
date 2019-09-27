@@ -14,3 +14,7 @@ export const renderMap = () => {
     center: [-122.6781832, 45.5195334]
   });
 };
+
+export const removeMap = map => {
+  map.remove();
+};
