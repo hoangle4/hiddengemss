@@ -1,8 +1,13 @@
-import React, { useEffect } from 'react';
-import { renderMap } from '../../utils';
+import React, { useEffect, useState } from 'react';
+import { renderMap, removeMap } from '../../utils';
 const Map = () => {
+  const [map, setMap] = useState();
   useEffect(() => {
-    renderMap();
+    setMap(renderMap());
+    return () => {
+      removeMap(map);
+      console.log('removed');
+    };
   }, []);
   return <div></div>;
 };
