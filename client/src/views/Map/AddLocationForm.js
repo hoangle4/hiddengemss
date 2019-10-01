@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-const AddLocationForm = ({ openModal }) => {
+const AddLocationForm = ({ openModal, closeModal }) => {
 	const Modal = useRef(null);
 
 	useEffect(
@@ -23,7 +23,9 @@ const AddLocationForm = ({ openModal }) => {
 								<input type='text' className='form-control mb-3' placeholder='Gem story...' />
 							</div>
 							<div className='form-group text-center'>
-								<button className='btn btn-medium btn-danger mr-5'>Close</button>
+								<a className='btn btn-medium btn-danger mr-5' onClick={() => closeModal(!openModal)}>
+									Close
+								</a>
 								<button className='btn btn-medium btn-sucess'>Submit</button>
 							</div>
 						</div>

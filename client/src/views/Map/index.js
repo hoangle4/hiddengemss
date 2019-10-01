@@ -28,7 +28,7 @@ const Map = () => {
 		});
 	if (MapContext.center.length === 0) return <Redirect to='/' />;
 
-	return <AddLocationForm openModal={openModal} />;
+	return <AddLocationForm openModal={openModal} closeModal={setOpenModal} />;
 };
 
 export default Map;
