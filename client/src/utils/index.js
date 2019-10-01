@@ -1,5 +1,5 @@
 import { Map } from 'mapbox-gl';
-export const renderMap = () => {
+export const renderMap = (latLng) => {
 	var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
 	mapboxgl.accessToken = process.env.REACT_APP_MAP_BOX_API;
@@ -10,10 +10,6 @@ export const renderMap = () => {
 		container: 'root',
 		style: 'mapbox://styles/mapbox/streets-v11',
 		zoom: 12,
-		center: [ -122.6781832, 45.5195334 ]
+		center: latLng
 	});
-};
-
-export const removeMap = (map) => {
-	map.remove();
 };

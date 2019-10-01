@@ -1,8 +1,8 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer } from 'react';
 import MapContext from './MapContext';
 import mapReducer from './MapReducer';
 
-import { SET_CENTER } from '../types';
+import { SET_CENTER, SET_CENTER_ERROR } from '../types';
 const MapState = (props) => {
 	const initialState = {
 		center: [],
@@ -11,12 +11,27 @@ const MapState = (props) => {
 	};
 	const [ state, dispatch ] = useReducer(mapReducer, initialState);
 
+	const setCenter = (latLng) => {
+		try {
+			dispatch({
+				type: SET_CENTER,
+				payload: latLng
+			});
+		} catch (error) {
+			console.error(error.message);
+			dispatch({
+				type: SET_CENTER_ERROR
+			});
+		}
+	};
+
 	return (
 		<MapContext.Provider
 			value={{
 				center: state.center,
 				loading: state.loading,
-				error: state.error
+				error: state.error,
+				setCenter
 			}}
 		>
 			{props.children}

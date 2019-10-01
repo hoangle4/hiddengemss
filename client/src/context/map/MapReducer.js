@@ -1,4 +1,4 @@
-import { SET_CENTER } from '../types';
+import { SET_CENTER, CLEAR_ERRORS, SET_CENTER_ERROR } from '../types';
 export default (state, action) => {
 	switch (action.type) {
 		case SET_CENTER:

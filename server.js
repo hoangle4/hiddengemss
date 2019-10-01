@@ -9,9 +9,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+	app.use(express.static('client/build'));
 } else {
-  require('dotenv').config();
+	require('dotenv').config();
 }
 
 //Backend API
@@ -20,11 +20,12 @@ app.use(require('./routes'));
 // Connect to the Mongo DB
 
 mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useCreateIndex: true,
-  useFindAndModify: false
+	useNewUrlParser: true,
+	useCreateIndex: true,
+	useFindAndModify: false,
+	useUnifiedTopology: true
 });
 
 app.listen(PORT, function() {
-  console.log(`API Server now listening on PORT ${PORT}!`);
+	console.log(`API Server now listening on PORT ${PORT}!`);
 });
