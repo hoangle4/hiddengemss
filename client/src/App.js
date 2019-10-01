@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-// import { Provider } from './context';
+import MapState from './context/map/MapState';
 import Map from './views/Map';
 // import Dashboard from './Dashboard';
 // import MyAccount from './MyAccount';
@@ -11,16 +11,16 @@ import Map from './views/Map';
 // import Test from './test.js';
 import LandingPage from './views/LandingPage';
 const App = () => {
-  return (
-    <Fragment>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={LandingPage} />
-          <Route exact path='/map' component={Map} />
-        </Switch>
-      </Router>
-    </Fragment>
-  );
+	return (
+		<MapState>
+			<Router>
+				<Switch>
+					<Route exact path='/' component={LandingPage} />
+					<Route exact path='/map' component={Map} />
+				</Switch>
+			</Router>
+		</MapState>
+	);
 };
 
 export default App;

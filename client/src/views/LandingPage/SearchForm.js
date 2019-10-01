@@ -1,10 +1,12 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState, useContext, Fragment } from 'react';
 import { Redirect } from 'react-router-dom';
+import mapContext from '../../context/map/MapContext';
 const SearchForm = () => {
 	const [ cityInput, setCityInput ] = useState('');
 	const [ stateInput, setStateInput ] = useState('');
 	const [ zipcodeInput, setZipcodeInput ] = useState('');
-	const [ latLngResult, setlatLngResult ] = useState();
+	const [ latLngFound, setlatLngFound ] = useState(false);
+	const MapContext = useContext(mapContext);
 
 	const handleFormSubmit = async (event) => {
 		event.preventDefault();
@@ -17,13 +19,11 @@ const SearchForm = () => {
 		);
 		const latLng = await results.json();
 		if (!latLng) return { msg: 'Location Not Found' };
-		setlatLngResult({
-			lat: latLng.results[0].geometry.location.lat,
-			lng: latLng.results[0].geometry.location.lng
-		});
+
+		MapContext.setCenter(latLng.results[0].geometry.location);
+		setlatLngFound(true);
 	};
-	if (latLngResult) return <Redirect to='/map' />;
-	console.log(latLngResult);
+	if (latLngFound) return <Redirect to='/map' />;
 	return (
 		<Fragment>
 			<form onSubmit={handleFormSubmit} className='Landing-search-form'>
