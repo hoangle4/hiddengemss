@@ -13,7 +13,3 @@ export const renderMap = (latLng) => {
 		center: latLng
 	});
 };
-
-export const removeMap = (map) => {
-	map.remove();
-};
