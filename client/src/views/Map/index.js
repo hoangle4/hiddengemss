@@ -16,8 +16,7 @@ const Map = () => {
 
     renderMap(MapContext.center).on('click', e => {
       MapContext.setCenter(e.lngLat);
-
-      setOpenModal(!openModal);
+      setOpenModal(o => !o);
     });
   }, []);
 
