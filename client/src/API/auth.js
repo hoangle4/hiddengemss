@@ -5,5 +5,8 @@ export default {
   },
   loginUser: formData => {
     return axios.post('/api/user/login', formData);
+  },
+  loadUser: () => {
+    return axios.get('/api/user/auth');
   }
 };
