@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 var UserSchema = new mongoose.Schema({
@@ -20,33 +20,33 @@ var UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  firstName: {
+  name: {
     type: String
   },
-  lastName: {
-    type: String
+  sub: {
+    type: Boolean
   },
   placeCreated: [
     {
       type: Schema.Types.ObjectId,
-      ref: "gems"
+      ref: 'gems'
     }
   ],
   follower: [
     {
       type: Schema.Types.ObjectId,
-      ref: "users"
+      ref: 'users'
     }
   ],
   following: [
     {
       type: Schema.Types.ObjectId,
-      ref: "users"
+      ref: 'users'
     }
   ],
   mails: [
     {
-      sender: { type: Schema.Types.ObjectId, ref: "users" },
+      sender: { type: Schema.Types.ObjectId, ref: 'users' },
       msgBody: {
         type: String,
         date: {
@@ -75,4 +75,4 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
-module.exports = User = mongoose.model("users", UserSchema);
+module.exports = User = mongoose.model('users', UserSchema);
