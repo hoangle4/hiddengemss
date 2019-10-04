@@ -1,34 +1,29 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { renderMap } from '../../utils';
+import React, { useState, useContext } from 'react';
+import { renderMap, renderMarker } from '../../utils';
 import { Redirect } from 'react-router-dom';
 import mapContext from '../../context/map/MapContext';
 import AddLocationForm from './AddLocationForm';
 import './Map.css';
 const Map = () => {
-	const [ openModal, setOpenModal ] = useState(false);
-	const [ map, setMap ] = useState();
-	const [ clickedLocation, setClickedLocation ] = useState({});
-	useEffect(
-		() => {
-			setOpenModal(openModal);
-		},
-		[ openModal ]
-	);
+  const MapContext = useContext(mapContext);
+  const [openModal, setOpenModal] = useState(false);
+  // const [LngLat, setLngLat] = useState([]);
+  // eslint-disable-next-line
+  const [map, setMap] = useState(() => {
+    if (MapContext.center.length === 0) return;
+    return renderMap(MapContext.center).on('click', e => {
+      setOpenModal(o => {
+        return !o;
+      });
+      setStateMarker(renderMarker(e.lngLat, map));
+    });
+  });
+  const [marker, setStateMarker] = useState();
 
-	const MapContext = useContext(mapContext);
+  !openModal && marker && marker.remove();
+  if (MapContext.center.length === 0) return <Redirect to='/' />;
 
-	useEffect(() => {
-		if (MapContext.center.length === 0) return;
-		setMap(renderMap(MapContext.center));
-	}, []);
-	if (map)
-		map.on('click', (e) => {
-			setClickedLocation(e.latLng);
-			setOpenModal(!openModal);
-		});
-	if (MapContext.center.length === 0) return <Redirect to='/' />;
-
-	return <AddLocationForm openModal={openModal} closeModal={setOpenModal} />;
+  return <AddLocationForm openModal={openModal} closeModal={setOpenModal} />;
 };
 
 export default Map;
