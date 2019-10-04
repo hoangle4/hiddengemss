@@ -1,4 +1,4 @@
-import { Map } from 'mapbox-gl';
+import { Map, Marker } from 'mapbox-gl';
 export const renderMap = latLng => {
   var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
@@ -12,4 +12,8 @@ export const renderMap = latLng => {
     zoom: 12,
     center: latLng
   });
+};
+
+export const renderMarker = (latLng, map) => {
+  return new Marker().setLngLat(latLng).addTo(map);
 };
