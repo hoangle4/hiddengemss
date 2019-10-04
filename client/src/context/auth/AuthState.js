@@ -17,15 +17,33 @@ const AuthState = props => {
     user: {},
     token: localStorage.getItem('authToken'),
     loading: true,
+    isAuthenticated: false,
     error: null
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
   const registerUser = async formData => {
-    const result = await authAPI.registerUser(formData);
-    console.log(result);
+    try {
+      const result = await authAPI.registerUser(formData);
+
+      dispatch({ type: REGISTER_SUCCESS, payload: result.data });
+    } catch (error) {
+      console.error(error.message);
+      dispatch({ type: REGISTER_FAIL, payload: error.response });
+    }
   };
   return (
-    <AuthContext.Provider value={{}}>{props.children}</AuthContext.Provider>
+    <AuthContext.Provider
+      value={{
+        user: state.user,
+        token: state.token,
+        loading: state.loading,
+        isAuthenticated: state.isAuthenticated,
+        error: state.error,
+        registerUser
+      }}
+    >
+      {props.children}
+    </AuthContext.Provider>
   );
 };
 export default AuthState;

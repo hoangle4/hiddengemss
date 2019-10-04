@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MapState from './context/map/MapState';
+import AuthState from './context/auth/AuthState';
+
 import Map from './views/Map';
 // import Dashboard from './Dashboard';
 // import MyAccount from './MyAccount';
@@ -12,15 +14,17 @@ import SignUp from './views/SignUp';
 import LandingPage from './views/LandingPage';
 const App = () => {
   return (
-    <MapState>
-      <Router>
-        <Switch>
-          <Route exact path='/' component={LandingPage} />
-          <Route exact path='/map' component={Map} />
-          <Route exact path='/signup' component={SignUp} />
-        </Switch>
-      </Router>
-    </MapState>
+    <AuthState>
+      <MapState>
+        <Router>
+          <Switch>
+            <Route exact path='/' component={LandingPage} />
+            <Route exact path='/map' component={Map} />
+            <Route exact path='/signup' component={SignUp} />
+          </Switch>
+        </Router>
+      </MapState>
+    </AuthState>
   );
 };
 
