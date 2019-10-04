@@ -31,6 +31,17 @@ const AuthState = props => {
       dispatch({ type: REGISTER_FAIL, payload: error.response });
     }
   };
+
+  const loginUser = async formData => {
+    try {
+      const result = await authAPI.loginUser(formData);
+
+      dispatch({ type: LOGIN_SUCCESS, payload: result.data });
+    } catch (error) {
+      console.error(error.message);
+      dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
+    }
+  };
   return (
     <AuthContext.Provider
       value={{
@@ -39,7 +50,8 @@ const AuthState = props => {
         loading: state.loading,
         isAuthenticated: state.isAuthenticated,
         error: state.error,
-        registerUser
+        registerUser,
+        loginUser
       }}
     >
       {props.children}

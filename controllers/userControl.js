@@ -32,4 +32,29 @@ router.post('/', async (req, resp) => {
   }
 });
 
+//@PUBLIC ROUTE
+//@LOGIN USER
+//POST  api/user/login
+router.post('/login', async (req, resp) => {
+  const { email, password } = req.body;
+  try {
+    let user = await models.User.findOne({ email });
+    if (!user) return resp.status(404).json({ msg: 'Invalid Credentials' });
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return resp.status(404).json({ msg: 'Invalid Credentials' });
+
+    jwt.sign({ user: user._id }, config.get('jwtSecret'), function(
+      error,
+      token
+    ) {
+      if (error) throw new Error(error);
+      resp.json(token);
+    });
+  } catch (error) {
+    console.error(error.message);
+    resp.status(500).json({ msg: 'SERVER ERROR' });
+  }
+});
+
 module.exports = router;
