@@ -4,7 +4,7 @@ import MapState from './context/map/MapState';
 import Map from './views/Map';
 // import Dashboard from './Dashboard';
 // import MyAccount from './MyAccount';
-// import SignUp from './Signup';
+import SignUp from './views/SignUp';
 // import Login from './Login';
 // import Profile from './Profile';
 // import Gem from './Gem';
@@ -17,6 +17,7 @@ const App = () => {
         <Switch>
           <Route exact path='/' component={LandingPage} />
           <Route exact path='/map' component={Map} />
+          <Route exact path='/signup' component={SignUp} />
         </Switch>
       </Router>
     </MapState>
