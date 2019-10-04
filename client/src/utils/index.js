@@ -1,4 +1,5 @@
 import { Map, Marker } from 'mapbox-gl';
+import axios from 'axios';
 export const renderMap = latLng => {
   var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
 
@@ -16,4 +17,12 @@ export const renderMap = latLng => {
 
 export const renderMarker = (latLng, map) => {
   return new Marker().setLngLat(latLng).addTo(map);
+};
+
+export const setAuthToken = authToken => {
+  if (authToken) {
+    axios.defaults.headers.common['x-auth-token'] = authToken;
+  } else {
+    delete axios.defaults.headers.common['x-auth-token'];
+  }
 };

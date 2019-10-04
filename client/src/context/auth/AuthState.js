@@ -1,8 +1,8 @@
 import React, { useReducer } from 'react';
 import AuthContext from './AuthContext';
 import authReducer from './AuthReducer';
-
 import authAPI from '../../API/auth';
+import { setAuthToken } from '../../utils';
 import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -21,14 +21,38 @@ const AuthState = props => {
     error: null
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
+  const loadUser = async () => {
+    const authToken = localStorage.getItem('authToken');
+    if (authToken) setAuthToken(authToken);
+    try {
+      const result = await authAPI.loadUser();
+      dispatch({ type: USER_LOADED, payload: result.data });
+    } catch (error) {
+      console.log(error.message);
+      dispatch({ type: AUTH_ERROR });
+    }
+  };
   const registerUser = async formData => {
     try {
       const result = await authAPI.registerUser(formData);
 
       dispatch({ type: REGISTER_SUCCESS, payload: result.data });
+      loadUser();
     } catch (error) {
       console.error(error.message);
       dispatch({ type: REGISTER_FAIL, payload: error.response });
+    }
+  };
+
+  const loginUser = async formData => {
+    try {
+      const result = await authAPI.loginUser(formData);
+
+      dispatch({ type: LOGIN_SUCCESS, payload: result.data });
+      loadUser();
+    } catch (error) {
+      console.error(error.message);
+      dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
     }
   };
   return (
@@ -39,7 +63,8 @@ const AuthState = props => {
         loading: state.loading,
         isAuthenticated: state.isAuthenticated,
         error: state.error,
-        registerUser
+        registerUser,
+        loginUser
       }}
     >
       {props.children}
