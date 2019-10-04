@@ -12,20 +12,18 @@ const Map = () => {
   const [map, setMap] = useState(() => {
     if (MapContext.center.length === 0) return;
     return renderMap(MapContext.center).on('click', e => {
-      // setMarker(e.lngLat);
+      setOpenModal(o => {
+        return !o;
+      });
+      setStateMarker(renderMarker(e.lngLat, map));
     });
   });
-  const [marker, setStateMarker] = useState(renderMarker(LngLat, map));
-  // const setMarker = lnglat => {
-  //   setStateMarker(() => {
-  //     return renderMarker(lnglat, map);
-  //   });
-  // };
+  const [marker, setStateMarker] = useState(() => {
+    if (LngLat.length === 0) return;
+    return renderMarker(LngLat, map);
+  });
 
-  const removeMarker = () => {
-    console.log(marker);
-  };
-  if (marker) console.log(marker.remove());
+  !openModal && marker && marker.remove();
   if (MapContext.center.length === 0) return <Redirect to='/' />;
 
   return <AddLocationForm openModal={openModal} closeModal={setOpenModal} />;
