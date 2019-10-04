@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import MapState from './context/map/MapState';
 import Map from './views/Map';
@@ -11,16 +11,16 @@ import Map from './views/Map';
 // import Test from './test.js';
 import LandingPage from './views/LandingPage';
 const App = () => {
-	return (
-		<MapState>
-			<Router>
-				<Switch>
-					<Route exact path='/' component={LandingPage} />
-					<Route exact path='/map' component={Map} />
-				</Switch>
-			</Router>
-		</MapState>
-	);
+  return (
+    <MapState>
+      <Router>
+        <Switch>
+          <Route exact path='/' component={LandingPage} />
+          <Route exact path='/map' component={Map} />
+        </Switch>
+      </Router>
+    </MapState>
+  );
 };
 
 export default App;
