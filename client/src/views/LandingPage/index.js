@@ -1,9 +1,11 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import './Landing.css';
 import SearchForm from './SearchForm';
+import authContext from '../../context/auth/AuthContext';
 
 const LandingPage = () => {
+  const AuthContext = useContext(authContext);
   return (
     <Fragment>
       <div className='Landing'>
@@ -25,12 +27,27 @@ const LandingPage = () => {
           </div>
 
           <ul className='Landing-nav'>
-            <li className='Landing-nav-links'>
-              <Link to='login'>Login</Link>
-            </li>
-            <li className='Landing-nav-links'>
-              <Link to='signup'>Sign Up</Link>
-            </li>
+            {(AuthContext.isAuthenticated && (
+              <Fragment>
+                <li className='Landing-nav-links'>
+                  <Link to='/dashboard'>Dashboard</Link>
+                </li>
+                <li className='Landing-nav-links'>
+                  <Link to='#!' onClick={() => AuthContext.logOut()}>
+                    Log Out
+                  </Link>
+                </li>
+              </Fragment>
+            )) || (
+              <Fragment>
+                <li className='Landing-nav-links'>
+                  <Link to='/login'>Login</Link>
+                </li>
+                <li className='Landing-nav-links'>
+                  <Link to='/signup'>Sign Up</Link>
+                </li>
+              </Fragment>
+            )}
           </ul>
         </div>
         <img
