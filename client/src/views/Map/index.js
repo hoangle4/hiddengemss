@@ -7,12 +7,13 @@ import './Map.css';
 const Map = () => {
   const MapContext = useContext(mapContext);
   const [openModal, setOpenModal] = useState(false);
-  // const [LngLat, setLngLat] = useState([]);
+  const [LngLat, setLngLat] = useState([]);
   // eslint-disable-next-line
   const [map, setMap] = useState(() => {
     if (MapContext.center.length === 0) return;
     return renderMap(MapContext.center).on('click', e => {
       setOpenModal(o => {
+        setLngLat(e.lngLat);
         return !o;
       });
       setStateMarker(renderMarker(e.lngLat, map));
@@ -23,7 +24,13 @@ const Map = () => {
   !openModal && marker && marker.remove();
   if (MapContext.center.length === 0) return <Redirect to='/' />;
 
-  return <AddLocationForm openModal={openModal} closeModal={setOpenModal} />;
+  return (
+    <AddLocationForm
+      openModal={openModal}
+      closeModal={setOpenModal}
+      gemCoord={LngLat}
+    />
+  );
 };
 
 export default Map;

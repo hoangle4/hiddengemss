@@ -3,18 +3,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const newGem = new Schema({
-  coordinates: [
-    {
-      lat: {
-        type: Number,
-        required: true
-      },
-      lng: {
-        type: Number,
-        required: true
-      }
+  gemCoord: {
+    lat: {
+      type: Number,
+      required: true
+    },
+    lng: {
+      type: Number,
+      required: true
     }
-  ],
+  },
   gemName: {
     type: String,
     required: true
