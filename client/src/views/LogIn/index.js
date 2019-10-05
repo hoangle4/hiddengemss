@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 import authContext from '../../context/auth/AuthContext';
 const LogIn = () => {
   const AuthContext = useContext(authContext);
@@ -11,6 +12,7 @@ const LogIn = () => {
     AuthContext.loginUser({ email, password });
   };
 
+  if (AuthContext.isAuthenticated) return <Redirect to='/' />;
   return (
     // eslint-disable-next-line
     <div className='col mt-5'>

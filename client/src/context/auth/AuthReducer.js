@@ -13,6 +13,8 @@ export default (state, action) => {
       return {
         ...state,
         user: action.payload,
+        loading: false,
+        isAuthenticated: true,
         error: null
       };
 
@@ -32,7 +34,7 @@ export default (state, action) => {
     case LOGOUT:
       return {
         ...state,
-        token: null,
+        token: localStorage.removeItem('authToken'),
         loading: false,
         isAuthenticated: false,
         error: action.payload

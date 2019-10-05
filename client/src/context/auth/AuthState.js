@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import AuthContext from './AuthContext';
 import authReducer from './AuthReducer';
 import authAPI from '../../API/auth';
@@ -10,7 +10,7 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOG_OUT
+  LOGOUT
 } from '../types';
 const AuthState = props => {
   const initialState = {
@@ -21,6 +21,9 @@ const AuthState = props => {
     error: null
   };
   const [state, dispatch] = useReducer(authReducer, initialState);
+  useEffect(() => {
+    if (localStorage.getItem('authToken')) loadUser();
+  }, []);
   const loadUser = async () => {
     const authToken = localStorage.getItem('authToken');
     if (authToken) setAuthToken(authToken);
@@ -55,6 +58,8 @@ const AuthState = props => {
       dispatch({ type: LOGIN_FAIL, payload: error.response.data.msg });
     }
   };
+
+  const logOut = () => dispatch({ type: LOGOUT });
   return (
     <AuthContext.Provider
       value={{
@@ -64,7 +69,8 @@ const AuthState = props => {
         isAuthenticated: state.isAuthenticated,
         error: state.error,
         registerUser,
-        loginUser
+        loginUser,
+        logOut
       }}
     >
       {props.children}
