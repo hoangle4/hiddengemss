@@ -1,5 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { renderMap, renderMarker } from '../../utils';
+import {
+  renderMap,
+  renderMarker,
+  setPopup,
+  generatePopupHTML
+} from '../../utils';
 import { Redirect } from 'react-router-dom';
 import mapContext from '../../context/map/MapContext';
 import AddLocationForm from './AddLocationForm';
@@ -9,7 +14,19 @@ const Map = () => {
   useEffect(() => {
     if (mapContext.length !== 0)
       MapContext.gems.forEach(gem => {
-        renderMarker(gem.gemCoord, map);
+        renderMarker(
+          gem.gemCoord,
+          map,
+          setPopup(
+            generatePopupHTML(
+              gem.gemName,
+              gem.gemDesc,
+              gem.gemStory,
+              gem.gemPhoto,
+              gem._id
+            )
+          )
+        );
       });
   }, []);
   const [openModal, setOpenModal] = useState(false);
@@ -18,11 +35,16 @@ const Map = () => {
   const [map, setMap] = useState(() => {
     if (MapContext.center.length === 0) return;
     return renderMap(MapContext.center).on('click', e => {
-      setOpenModal(o => {
-        setLngLat(e.lngLat);
-        return !o;
-      });
-      setStateMarker(renderMarker(e.lngLat, map));
+      if (
+        e.originalEvent.target.nodeName !== 'path' &&
+        e.originalEvent.target.nodeName === 'CANVAS'
+      ) {
+        setOpenModal(o => {
+          setLngLat(e.lngLat);
+          return !o;
+        });
+        setStateMarker(renderMarker(e.lngLat, map));
+      }
     });
   });
   const [marker, setStateMarker] = useState();
