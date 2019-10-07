@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
-
-const AddLocationForm = ({ openModal, closeModal }) => {
+import gemAPI from '../../API/gem';
+const AddLocationForm = ({ openModal, closeModal, gemCoord }) => {
   const [gemName, setGemName] = useState();
   const [gemDesc, setGemDesc] = useState();
   const [gemStory, setGemStory] = useState();
   const [gemPhoto, setGemPhoto] = useState({});
+  const handleOnSubmit = async e => {
+    e.preventDefault();
+    const result = await gemAPI.addNewGem({
+      gemName,
+      gemDesc,
+      gemStory,
+      gemPhoto: gemPhoto.webkitRelativePath,
+      gemCoord
+    });
+    setGemName('');
+    setGemDesc('');
+    setGemStory('');
+    setGemPhoto('');
+  };
 
   return (
     <div
@@ -12,7 +26,7 @@ const AddLocationForm = ({ openModal, closeModal }) => {
       style={{ display: `${openModal ? 'block' : 'none'}` }}
     >
       <div className='container-fluid'>
-        <form>
+        <form onSubmit={handleOnSubmit}>
           <div className='row justify-content-center'>
             <div className='col-md-6 col-xs-12 AddLocationForm_Col'>
               <h5>Add Your Gem</h5>

@@ -1,44 +1,42 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
 const newGem = new Schema({
-  coordinates: [
-    {
-      lat: {
-        type: Number,
-        required: true
-      },
-      lng: {
-        type: Number,
-        required: true
-      }
+  gemCoord: {
+    lat: {
+      type: Number,
+      required: true
+    },
+    lng: {
+      type: Number,
+      required: true
     }
-  ],
-  placeName: {
-    type: String,
-    required: true
   },
-  category: {
+  gemName: {
     type: String,
     required: true
   },
   likes: [
     {
       type: Schema.Types.ObjectId,
-      ref: "users"
+      ref: 'users'
     }
   ],
   createdBy: {
     type: Schema.Types.ObjectId,
-    ref: "users",
+    ref: 'users',
     required: true
   },
   dateCreated: {
     type: Date,
     default: Date.now
   },
-  description: {
+  gemDesc: {
+    type: String,
+    required: true
+  },
+  gemStory: {
     type: String,
     required: true
   },
@@ -58,12 +56,12 @@ const newGem = new Schema({
       },
       commentUser: {
         type: Schema.Types.ObjectId,
-        ref: "users"
+        ref: 'users'
       }
     }
   ],
-  photos: {
+  gemPhoto: {
     type: String
   }
 });
-module.exports = Gem = mongoose.model("gems", newGem);
+module.exports = Gem = mongoose.model('gems', newGem);
