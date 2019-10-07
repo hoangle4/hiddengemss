@@ -51,7 +51,7 @@ const Map = () => {
 
   !openModal && marker && marker.remove();
   if (MapContext.center.length === 0) return <Redirect to='/' />;
-
+  if (MapContext.gems.length === 0) return <Redirect to='/' />;
   return (
     <AddLocationForm
       openModal={openModal}
