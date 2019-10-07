@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { renderMap, renderMarker } from '../../utils';
 import { Redirect } from 'react-router-dom';
 import mapContext from '../../context/map/MapContext';
@@ -6,6 +6,12 @@ import AddLocationForm from './AddLocationForm';
 import './Map.css';
 const Map = () => {
   const MapContext = useContext(mapContext);
+  useEffect(() => {
+    if (mapContext.length !== 0)
+      MapContext.gems.forEach(gem => {
+        renderMarker(gem.gemCoord, map);
+      });
+  }, []);
   const [openModal, setOpenModal] = useState(false);
   const [LngLat, setLngLat] = useState([]);
   // eslint-disable-next-line

@@ -23,4 +23,17 @@ router.post('/', auth, async (req, resp) => {
   }
 });
 
+//@PUBLIC ROUTE
+//@GET ALL GEM
+//GET  api/gem
+router.get('/', async (req, resp) => {
+  try {
+    const gem = await models.Gem.find({}).populate('createdBy', 'name');
+    resp.json(gem);
+  } catch (error) {
+    console.error(error.message);
+    resp.status(500).json({ msg: 'SERVER ERROR' });
+  }
+});
+
 module.exports = router;

@@ -10,3 +10,5 @@ export const LOGOUT = 'LOGOUT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const SET_CENTER = 'SET_CENTER';
 export const SET_CENTER_ERROR = 'SET_CENTER_ERROR';
+export const GET_GEM = 'GET_GEM';
+export const GET_GEM_ERROR = 'GET_GEM_ERROR';

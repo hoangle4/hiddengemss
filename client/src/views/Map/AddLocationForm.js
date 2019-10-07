@@ -14,7 +14,10 @@ const AddLocationForm = ({ openModal, closeModal, gemCoord }) => {
       gemPhoto: gemPhoto.webkitRelativePath,
       gemCoord
     });
-    console.log(result.data);
+    setGemName('');
+    setGemDesc('');
+    setGemStory('');
+    setGemPhoto('');
   };
 
   return (
